@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181818">
+  <meta name="description" content="Build a personalized CrashReporter AutoConfig QMOD for Beat Saber on Quest. Choose your version, configure reports, and download.">
+  <title>Crash Reporter Setup — CrashReporter QMOD generator</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./vendor/jszip.min.js" defer></script>
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <main class="wrap">
+    <section class="intro" aria-labelledby="page-title">
+      <h1 id="page-title">Crash Reporter Setup</h1>
+      <p>Generate an AutoConfig QMOD for Beat Saber on Quest.</p>
+    </section>
+    <div class="workbench" id="generator">
+      <section class="config-panel" aria-labelledby="configure-title">
+        <div class="panel-heading"><h2 id="configure-title">Report settings</h2></div>
+        <form id="generator-form" novalidate>
+          <div class="fields-grid">
+            <div class="field"><div class="label-row"><label for="username">Username</label></div><div class="input-wrap"><input id="username" name="username" placeholder="e.g. saber_player" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="64" required aria-describedby="username-hint username-error"></div><p class="field-hint" id="username-hint">Name shown on your reports.</p><p class="field-error" id="username-error" role="alert" hidden></p></div>
+            <div class="field version-field"><div class="label-row"><label for="game-version">Beat Saber version</label></div><select id="game-version" name="version" aria-describedby="version-hint" disabled><option value="">Loading versions…</option></select><p class="field-hint" id="version-hint">Match your headset’s version.</p></div>
+          </div>
+          <p id="catalog-warning" class="inline-warning" hidden></p>
+          <fieldset class="report-options"><legend>Include in reports</legend><label class="toggle-row"><span class="option-text"><strong>Full crash reports</strong><span>Detailed crash information.</span></span><input id="full-crash" type="checkbox" checked></label><label class="toggle-row"><span class="option-text"><strong>Game logs</strong><span>Game activity around the crash.</span></span><input id="include-logs" type="checkbox" checked></label></fieldset>
+          <p class="privacy-note">Generated locally. Installed CrashReporter uploads selected reports under your username to <a href="https://analyze.aeternal.dev" target="_blank" rel="noopener noreferrer">Aeternal’s analyzer</a>.</p>
+          <button class="download-button" id="download-button" type="submit" disabled><span>Download QMOD</span></button>
+          <p id="generation-status" class="generation-status" role="status" hidden></p>
+        </form>
+      </section>
+      <aside class="preview-column" aria-label="Your package preview">
+        <div class="package-panel"><h2>Package</h2><div class="package-meta"><div><span>Game version</span><strong id="preview-game">Choose a version</strong></div><div><span>Mod loader</span><strong id="preview-loader">—</strong></div><div><span>CrashReporter</span><strong id="preview-reporter">—</strong></div><div><span>Report username</span><strong id="preview-username">—</strong></div></div><div class="package-bottom"><span id="package-readiness">Add your username to get started</span></div></div>
+        <div class="inside-panel"><details id="package-details"><summary><span> Package contents</span></summary><div class="inside-content"><div class="file-row"><code>mod.json</code><span>Package + dependency</span></div><div class="file-row"><code>CrashReporter.json</code><span>Your settings</span></div><div class="file-row"><code>cover.png</code><span>Package artwork</span></div><p>The mod manager downloads the compatible CrashReporter dependency if it’s missing. The reporter binary is not bundled in this configuration file.</p><details class="code-details"><summary>View configuration JSON</summary><pre id="config-preview"></pre></details></div></details></div>
+        <button type="button" id="copy-setup" class="share-setup"><span>Copy settings link</span></button><p id="copy-status" class="copy-status" role="status"></p>
+      </aside>
+    </div>
+    <section id="download-result" class="result-panel" hidden aria-labelledby="result-title"><div class="result-main"><h2 id="result-title">Install the QMOD</h2><p id="result-filename"></p><p>Import the QMOD with your mod manager, such as <a href="https://mbf.bsquest.xyz/" target="_blank" rel="noopener noreferrer">ModsBeforeFriday</a>. Let it install CrashReporter if needed, launch Beat Saber, then reproduce the crash.</p><div class="report-link-row"><a id="reports-link" target="_blank" rel="noopener noreferrer">Open your crash reports </a><button id="copy-reports" type="button"> Copy reports link</button></div><p class="result-footnote">Share the reports link with the person helping you. Reports appear after an upload; this page doesn’t check the analyzer.</p><p id="report-copy-status" role="status"></p></div></section>
+    <section class="faq-section" aria-label="Common questions"><details><summary>Don’t see your game version?</summary><p>Only versions with a CrashReporter release in the <a href="https://mods.bsquest.xyz/mods.json" target="_blank" rel="noopener noreferrer">BSQuest catalog</a> are listed. Reload the page to check for updates. Don’t install a package for a different game version.</p></details><details><summary>What does this QMOD change?</summary><p>It writes <code>CrashReporter.json</code> to your game’s Configs folder and declares CrashReporter as a required dependency. Installing it replaces your existing CrashReporter configuration with the settings you choose here.</p></details></section>
+  </main>
+  <footer class="wrap"><div><a href="https://bsquest.xyz/crgen/crgen.html" target="_blank" rel="noopener noreferrer">Inspired by Alteran’s generator</a><a href="https://github.com/darknight1050/CrashReporter" target="_blank" rel="noopener noreferrer">CrashReporter</a></div></footer>
+  <noscript><div class="noscript">Enable JavaScript to load versions and generate your QMOD locally.</div></noscript>
+</body>
+</html>
